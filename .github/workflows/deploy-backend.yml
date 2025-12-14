@@ -1,0 +1,27 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'backend/**' # Chỉ chạy khi có thay đổi ở thư mục backend
+
+jobs:
+  api-deploy:
+    name: 🚀 Deploy Backend to InfinityFree
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 📂 Sync Backend files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./backend/       # Lấy code từ thư mục này
+        server-dir: ./htdocs/api/   # Đẩy vào thư mục /api
+        exclude: |
+          **/.git*
+          **/.git*/**

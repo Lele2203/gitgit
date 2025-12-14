@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo InfinityFree Deploy</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        .box { border: 1px solid #ddd; padding: 20px; margin-top: 20px; border-radius: 8px; }
+        #backend-data { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Frontend đang chạy!</h1>
+    <div class="box">
+        <p>Đang tải dữ liệu từ Backend...</p>
+        <p id="backend-data">Loading...</p>
+    </div>
+
+    <script>
+        // Gọi đến file PHP đã upload
+        fetch('/api/index.php') 
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('backend-data').innerText = data.message + " (" + data.time + ")";
+            })
+            .catch(error => {
+                document.getElementById('backend-data').innerText = "Lỗi kết nối Backend: " + error;
+                console.error(error);
+            });
+    </script>
+</body>
+</html>
