@@ -13,7 +13,7 @@ $projects = [
         "manager" => "Nguyễn Văn A",
         "deadline" => "2025-12-31",
         "status" => "In Progress",
-        "progress" => 75
+        "progress" => 65
     ],
     [
         "id" => 2,
