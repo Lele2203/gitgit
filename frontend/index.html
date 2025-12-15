@@ -13,6 +13,7 @@
 <body>
 
     <h1 class="text-center text-danger mt-3">Chiều Thứ Hai - Ca 3</h1>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -42,10 +43,47 @@
     </div>
     
     <script>
-        // ... (Code JS cũ giữ nguyên)
         function loadProjects() {
-             fetch('/api/index.php') // Code cũ
-             // ...
+            const tableBody = document.getElementById('project-list');
+            
+            // Gọi API
+            fetch('/api/index.php')
+                .then(response => response.json())
+                .then(res => {
+                    const projects = res.data;
+                    let html = '';
+                    
+                    if(projects.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Chưa có dự án nào</td></tr>';
+                        return;
+                    }
+
+                    projects.forEach(project => {
+                        let badgeClass = 'bg-secondary';
+                        if(project.status === 'Completed') badgeClass = 'bg-success';
+                        if(project.status === 'In Progress') badgeClass = 'bg-primary';
+                        if(project.status === 'Pending') badgeClass = 'bg-warning text-dark';
+
+                        html += `
+                            <tr>
+                                <td>${project.id}</td>
+                                <td class="fw-bold">${project.name}</td>
+                                <td>${project.manager}</td>
+                                <td>
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar" role="progressbar" style="width: ${project.progress}%;">${project.progress}%</div>
+                                    </div>
+                                </td>
+                                <td><span class="badge ${badgeClass}">${project.status}</span></td>
+                            </tr>
+                        `;
+                    });
+                    tableBody.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Lỗi kết nối Backend! (Hãy kiểm tra lại Action)</td></tr>';
+                });
         }
         document.addEventListener("DOMContentLoaded", loadProjects);
     </script>

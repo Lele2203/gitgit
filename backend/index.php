@@ -1,10 +1,8 @@
 <?php
 // backend/index.php
-// Cho phép Frontend từ mọi nguồn truy cập (CORS)
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-// Giả lập dữ liệu danh sách dự án (Sau này bạn sẽ lấy từ MySQL ở đây)
 $projects = [
     [
         "id" => 1,
@@ -32,7 +30,6 @@ $projects = [
     ]
 ];
 
-// Trả về dữ liệu JSON
 echo json_encode([
     "status" => "success",
     "total" => count($projects),
