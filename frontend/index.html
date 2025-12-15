@@ -8,18 +8,17 @@
     <style>
         body { background-color: #f8f9fa; }
         .container { margin-top: 50px; }
-        .card { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
+    <h1 class="text-center text-danger mt-3">Chiều Thứ Hai - Ca 3</h1>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <div class="card-header bg-primary text-white">
                         <h4 class="mb-0">📋 Danh sách Dự án</h4>
-                        <button class="btn btn-light btn-sm" onclick="loadProjects()">🔄 Tải lại</button>
                     </div>
                     <div class="card-body">
                         <table class="table table-hover">
@@ -33,9 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody id="project-list">
-                                <tr>
-                                    <td colspan="5" class="text-center">Đang tải dữ liệu...</td>
-                                </tr>
+                                <tr><td colspan="5" class="text-center">Đang tải dữ liệu...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -43,53 +40,15 @@
             </div>
         </div>
     </div>
-
+    
     <script>
-        // Hàm gọi API từ Backend
+        // ... (Code JS cũ giữ nguyên)
         function loadProjects() {
-            const tableBody = document.getElementById('project-list');
-            tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Đang cập nhật...</td></tr>';
-
-            // Gọi vào đường dẫn API (do file deploy-backend.yml đã đẩy vào folder /api)
-            fetch('/api/index.php')
-                .then(response => response.json())
-                .then(res => {
-                    const projects = res.data;
-                    let html = '';
-                    
-                    projects.forEach(project => {
-                        // Xử lý màu sắc cho trạng thái
-                        let badgeClass = 'bg-secondary';
-                        if(project.status === 'Completed') badgeClass = 'bg-success';
-                        if(project.status === 'In Progress') badgeClass = 'bg-primary';
-                        if(project.status === 'Pending') badgeClass = 'bg-warning text-dark';
-
-                        html += `
-                            <tr>
-                                <td>${project.id}</td>
-                                <td class="fw-bold">${project.name}</td>
-                                <td>${project.manager}</td>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar" role="progressbar" style="width: ${project.progress}%;" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100">${project.progress}%</div>
-                                    </div>
-                                </td>
-                                <td><span class="badge ${badgeClass}">${project.status}</span></td>
-                            </tr>
-                        `;
-                    });
-                    tableBody.innerHTML = html;
-                })
-                .catch(error => {
-                    console.error('Lỗi:', error);
-                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Không thể kết nối tới Backend!</td></tr>';
-                });
+             fetch('/api/index.php') // Code cũ
+             // ...
         }
-
-        // Tự động chạy khi mở trang
         document.addEventListener("DOMContentLoaded", loadProjects);
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
