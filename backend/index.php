@@ -7,7 +7,7 @@ $projects = [
     [
         "id" => 1,
         "name" => "Xây dựng Website E-commerce",
-        "manager" => "Nguyễn Văn A",
+        "manager" => "lam hoang phuc",
         "deadline" => "2025-12-31",
         "status" => "In Progress",
         "progress" => 65
