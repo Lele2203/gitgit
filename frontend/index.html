@@ -71,23 +71,35 @@
 
         <div class="row justify-content-center mt-4">
             <div class="col-md-10">
-                <h4 class="mb-3">Kết quả tìm kiếm:</h4>
+                <h4 class="mb-3">Kết quả:</h4>
                 <div id="result-area">
-                    <div class="alert alert-info text-center">Vui lòng chọn điểm đi và đến rồi nhấn tìm kiếm.</div>
+                    <div class="alert alert-info text-center">Đang tải dữ liệu từ server...</div>
                 </div>
             </div>
         </div>
     </div>
     
     <script>
-        // Dữ liệu giả lập
-        const tripsData = [
-            { id: 1, from: 'Sài Gòn', to: 'Đà Lạt', time: '22:00', price: '300.000đ', type: 'Giường nằm' },
-            { id: 2, from: 'Sài Gòn', to: 'Đà Lạt', time: '08:00', price: '280.000đ', type: 'Ghế ngồi' },
-            { id: 3, from: 'Sài Gòn', to: 'Nha Trang', time: '21:00', price: '350.000đ', type: 'Limousine' },
-            { id: 4, from: 'Sài Gòn', to: 'Vũng Tàu', time: '07:00', price: '150.000đ', type: 'Hoa Mai' }
-        ];
+        // Biến toàn cục lưu dữ liệu
+        let tripsData = [];
 
+        // Hàm gọi API lấy dữ liệu từ PHP
+        function fetchTrips() {
+            // Đường dẫn trỏ vào thư mục api
+            fetch('api/index.php') 
+                .then(response => response.json())
+                .then(res => {
+                    tripsData = res.data; 
+                    console.log("Dữ liệu tải về:", tripsData);
+                    document.getElementById('result-area').innerHTML = '<div class="alert alert-success text-center">Dữ liệu đã sẵn sàng. Hãy chọn và tìm kiếm!</div>';
+                })
+                .catch(err => {
+                    console.error("Lỗi:", err);
+                    document.getElementById('result-area').innerHTML = '<div class="alert alert-danger text-center">Không thể kết nối với Backend (api/index.php)!</div>';
+                });
+        }
+
+        // Hàm lọc và hiển thị
         function searchTrips() {
             const dep = document.getElementById('departure').value;
             const dest = document.getElementById('destination').value;
@@ -121,6 +133,9 @@
             });
             resultArea.innerHTML = html;
         }
+
+        // Chạy hàm lấy dữ liệu khi web load xong
+        document.addEventListener("DOMContentLoaded", fetchTrips);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
