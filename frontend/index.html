@@ -30,6 +30,7 @@
     </nav>
 
     <div class="container text-center my-4">
+        
         <h1 class="text-primary fw-bold">Lam hoang phuc- Cuoi ki</h1>
     </div>
 
@@ -86,7 +87,7 @@
         // Hàm gọi API lấy dữ liệu từ PHP
         function fetchTrips() {
             // Đường dẫn trỏ vào thư mục api
-            fetch('api/index.php') 
+            fetch('api/data.json') 
                 .then(response => response.json())
                 .then(res => {
                     tripsData = res.data; 
